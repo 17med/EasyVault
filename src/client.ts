@@ -11,7 +11,7 @@ const options = {
 };
 
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
-
+var token = "";
 const ConnectService =
   grpc.loadPackageDefinition(packageDefinition).ConnectService;
 
@@ -27,7 +27,14 @@ client.connect(
       console.error(`Error: ${error.message}`);
       return;
     }
+    token = response.token;
     console.log(response);
-    console.log(`Response: ${response.toString()}`);
+    client.disconnect({ token: token }, (error: any, response: any) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+      }
+      console.log("disconnected", response);
+    });
   }
 );
