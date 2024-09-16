@@ -16,6 +16,7 @@
   "devDependencies": {
     "@grpc/grpc-js": "^1.11.2",
     "@types/node": "^22.5.5",
+    "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
@@ -23,6 +24,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6"
   }
 }

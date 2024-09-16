@@ -1,7 +1,7 @@
 import grpc from "@grpc/grpc-js";
 import protoLoader from "@grpc/proto-loader";
 import TokenManager from "./TokenManager";
-import { disconnect } from "process";
+import UserMangments from "../Services/UserMangments";
 const PROTO_PATH = "./src/protocols/Connect.proto";
 const options = {
   keepCase: true,
@@ -22,17 +22,25 @@ export default function Init(server: any) {
       { request: { username, password } }: any,
       callback: any
     ) => {
+      const res = await UserMangments.login(username, password);
+      if (res == false) {
+        callback(null, {
+          message: `please verify ur data`,
+          code: 401,
+        });
+        return;
+      }
       console.log(
         `Received request with username: ${username} password: ${password}`
       );
-      const token = await TokenManager.addToken(username);
+      const token = await TokenManager.addToken(username, res[1]);
       callback(null, {
         message: `Hello ${username}`,
         code: 200,
         token: token,
       });
     },
-    
+
     disconnect: ({ request: { token } }: any, callback: any) => {
       console.log(`Received request token ss ${token}`);
       const x = TokenManager.removeToken(token);
