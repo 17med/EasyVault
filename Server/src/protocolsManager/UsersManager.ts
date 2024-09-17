@@ -1,7 +1,7 @@
 import grpc from "@grpc/grpc-js";
 import protoLoader from "@grpc/proto-loader";
-import TokenManager from "./TokenManager";
-import UserMangments from "../Services/UserMangments";
+import TokenManager from "../Services/TokenManagments";
+import UserMangments from "../Services/UserManagments";
 const PROTO_PATH = "./src/protocols/Users.proto";
 const options = {
   keepCase: true,

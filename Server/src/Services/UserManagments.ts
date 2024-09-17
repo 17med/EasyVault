@@ -1,13 +1,36 @@
 import fs from "fs/promises";
 import bcrypt from "bcrypt";
+import path from "path";
 export default class UserMangments {
+  static async fileexist() {
+    try {
+      await fs.access(path.join("./src/DB/users.json"));
+    } catch {
+      console.log("File does not exist");
+      await fs.writeFile(
+        "./src/DB/users.json",
+        JSON.stringify({
+          users: [
+            {
+              username: "admin",
+              password:
+                "$2b$10$Fx8IiK/EkhsbbhBvUwhctuMeFXURPJ0gTCDniuRguyQ3wsIc5SJL2",
+              isadmin: true,
+            },
+          ],
+        })
+      );
+    }
+  }
   static async getusers() {
+    await UserMangments.fileexist();
     const x = await fs.readFile("./src/DB/users.json", "utf-8");
     const users = JSON.parse(x);
     console.log(users);
   }
 
   static async login(username: string, password: string) {
+    await UserMangments.fileexist();
     const x = await fs.readFile("./src/DB/users.json", "utf-8");
     const users = JSON.parse(x);
     const user = users.users.find((x: any) => x.username == username);
@@ -25,6 +48,7 @@ export default class UserMangments {
   }
 
   static async adduser(username: string, password: string, isadmin: boolean) {
+    await UserMangments.fileexist();
     const x = await fs.readFile("./src/DB/users.json", "utf-8");
     const users = JSON.parse(x);
     if (users.users.indexOf({ username: username }) != -1) {
