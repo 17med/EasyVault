@@ -23,7 +23,7 @@ export default function Init(server: any) {
       { request: { token, username, password, isadmin } }: any,
       callback: any
     ) => {
-      if (TokenManager.verify(token) == true) {
+      if ((await TokenManager.isAdmin(token)) == true) {
         const x = await UserMangments.adduser(username, password, isadmin);
         if (x) {
           callback(null, {

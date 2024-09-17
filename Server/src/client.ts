@@ -27,7 +27,7 @@ const Users = new UserService(
   grpc.credentials.createInsecure()
 );
 client.connect(
-  { username: "test", password: "test" },
+  { username: "ahmed", password: "ahmed" },
   (error: any, response: any) => {
     if (error) {
       console.error(`Error: ${error.message}`);
@@ -37,8 +37,8 @@ client.connect(
     Users.CreateUser(
       {
         token: token,
-        username: "test1",
-        password: "test1",
+        username: "zanj",
+        password: "zanj",
         isadmin: false,
       },
       (error: any, response: any) => {

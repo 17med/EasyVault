@@ -9,12 +9,18 @@ class TokenManager {
     if (x != -1) {
       try {
         const r = await jwt.verify(TokenManager.Tokens[x], "secret");
-        const res = JSON.parse(r as string);
+        const res = r as {
+          username: string;
+          connectiondate: Date;
+          isadmin: boolean;
+        };
+        console.log("ssss :", res);
         if (res.isadmin == true) {
           return true;
         }
         return false;
       } catch (e: any) {
+        console.log(e);
         return false;
       }
     }
