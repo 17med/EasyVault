@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message Collactionname{
+    string name=1;
+}
+message ChangeCollactionname{
+    string oldname=1;
+    string newname=2;
+}
+
+service CollactionService{
+    rpc Createcollaction(Collactionname) returns(result);
+    rpc Deletecollaction(Collactionname) returns(result);
+}
+
+message result{
+    string message=1;
+    int32 code=2;
+}

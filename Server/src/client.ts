@@ -34,12 +34,10 @@ client.connect(
       return;
     }
     token = response.token;
-    Users.CreateUser(
+    Users.DeleteUser(
       {
         token: token,
         username: "test",
-        password: "test",
-        isadmin: false,
       },
       (error: any, response: any) => {
         if (error) {

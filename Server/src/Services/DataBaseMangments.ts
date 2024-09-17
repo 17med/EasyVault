@@ -1,0 +1,39 @@
+import fs from "fs/promises";
+import { BSON, EJSON, ObjectId } from "bson";
+export default class DataBaseMangments {
+  static async getDbs() {
+    const isFile = async (fileName: string) => {
+      if ((await fs.lstat(fileName)).isFile() == true) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+    const x = await fs.readdir("./src/DB/DataBases/");
+
+    const s: any = [];
+    for (var i = 0; i < x.length; i++) {
+      try {
+        if (!(await isFile(`./src/DB/DataBases/${x[i]}`))) {
+          if (
+            (
+              await fs.lstat(`./src/DB/DataBases/${x[i]}/Manfestdb.vault`)
+            ).isFile()
+          ) {
+            s.push(x[i]);
+          }
+        }
+      } catch (e: any) {}
+    }
+    console.log(s);
+    return s;
+  }
+
+  static async CreateDb(name: string) {
+    await fs.mkdir(`./src/DB/DataBases/${name}`);
+    const bytes = BSON.serialize({ _id: new ObjectId() });
+    await fs.writeFile(`./src/DB/DataBases/${name}/Manfestdb.vault`, bytes);
+  }
+}
+DataBaseMangments.CreateDb("TEST");
+console.log(DataBaseMangments.getDbs());

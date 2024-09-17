@@ -22,6 +22,16 @@ export default class UserMangments {
       );
     }
   }
+  static async deleteUser(username: string) {
+    await UserMangments.fileexist();
+    const x = await fs.readFile("./src/DB/users.json", "utf-8");
+    const users = JSON.parse(x);
+    console.log("users : ", users.users);
+    const l = users.users.filter((e: any) => e.username != username);
+    users.users = l;
+    await fs.writeFile("./src/DB/users.json", JSON.stringify({ users: l }));
+    return true;
+  }
   static async getusers() {
     await UserMangments.fileexist();
     const x = await fs.readFile("./src/DB/users.json", "utf-8");

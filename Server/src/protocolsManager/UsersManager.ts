@@ -28,7 +28,7 @@ export default function Init(server: any) {
         if (x) {
           callback(null, {
             message: `user created successfully`,
-            code: 200,
+            code: 201,
           });
           return;
         } else {
@@ -42,6 +42,23 @@ export default function Init(server: any) {
         message: `unauthorized`,
         code: 401,
       });
+    },
+    DeleteUser: async (
+      { request: { token, username } }: any,
+      callback: any
+    ) => {
+      if ((await TokenManager.isAdmin(token)) == true) {
+        await UserMangments.deleteUser(username);
+        callback(null, {
+          message: "deleted successfully",
+          code: 200,
+        });
+      } else {
+        callback(null, {
+          message: `unauthorized`,
+          code: 401,
+        });
+      }
     },
   });
 }

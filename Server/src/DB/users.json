@@ -1,1 +1,9 @@
-{"users":[{"username":"admin","password":"$2b$10$Fx8IiK/EkhsbbhBvUwhctuMeFXURPJ0gTCDniuRguyQ3wsIc5SJL2","isadmin":true},{"username":"test","password":"$2b$10$uCKQUqM8kGnu3bkY5l9UXucXI/39CxK6ZrqegGCL5X7IIWjuLgk0q","isadmin":false}]}
+{
+  "users": [
+    {
+      "username": "admin",
+      "password": "$2b$10$Fx8IiK/EkhsbbhBvUwhctuMeFXURPJ0gTCDniuRguyQ3wsIc5SJL2",
+      "isadmin": true
+    }
+  ]
+}
