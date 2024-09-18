@@ -15,7 +15,7 @@ export default function startserver() {
         console.error(`Error binding server: ${error.message}`);
         return;
       }
-      console.log(`Server running at http://127.0.0.1:50051`);
+      console.log(`Server running at http://127.0.0.1:51111`);
     }
   );
 }
