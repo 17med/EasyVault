@@ -2,6 +2,8 @@ syntax = "proto3";
 
 message Collactionname{
     string name=1;
+    string db=2;
+    string token=2;
 }
 message ChangeCollactionname{
     string oldname=1;

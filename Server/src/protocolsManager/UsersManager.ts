@@ -50,7 +50,7 @@ export default function Init(server: any) {
       if ((await TokenManager.isAdmin(token)) == true) {
         await UserMangments.deleteUser(username);
         callback(null, {
-          message: "deleted successfully",
+          message: "user deleted successfully",
           code: 200,
         });
       } else {

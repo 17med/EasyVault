@@ -25,15 +25,18 @@ export default class DataBaseMangments {
         }
       } catch (e: any) {}
     }
-    console.log(s);
+    //console.log(s);
     return s;
   }
 
   static async CreateDb(name: string) {
+    if ((await DataBaseMangments.getDbs()).indexOf(name) != -1) {
+      return false;
+    }
     await fs.mkdir(`./src/DB/DataBases/${name}`);
     const bytes = BSON.serialize({ _id: new ObjectId() });
     await fs.writeFile(`./src/DB/DataBases/${name}/Manfestdb.vault`, bytes);
+    return true;
   }
 }
 DataBaseMangments.CreateDb("TEST");
-console.log(DataBaseMangments.getDbs());
