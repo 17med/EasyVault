@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import { BSON, EJSON, ObjectId } from "bson";
 import DataBaseMangments from "./DataBaseMangments";
+import { RmDirOptions } from "fs";
 export default class CollactionMangments {
   static async getsCollactions(database: string) {
     const isFile = async (fileName: string) => {
@@ -30,6 +31,18 @@ export default class CollactionMangments {
     }
     try {
       await fs.mkdir(`./src/DB/DataBases/${database}/${name}`);
+      return true;
+    } catch (e: any) {
+      return false;
+    }
+  }
+  static async DeleteCollaction(database: string, name: string) {
+    if ((await DataBaseMangments.getDbs()).indexOf(database) == -1) {
+      return false;
+    }
+    try {
+      const rmdir: RmDirOptions = { recursive: true };
+      await fs.rm(`./src/DB/DataBases/${database}/${name}`, rmdir);
       return true;
     } catch (e: any) {
       return false;

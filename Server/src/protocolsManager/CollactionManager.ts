@@ -44,5 +44,29 @@ export default function Init(server: any) {
         });
       }
     },
+    Deletecollaction: async (
+      { request: { database, token, name } }: any,
+      callback: any
+    ) => {
+      if (!(await TokenManager.verify(token))) {
+        callback(null, {
+          message: "unauthorized",
+          code: 401,
+        });
+      } else {
+        const x = await CollactionMangments.DeleteCollaction(database, name);
+        if (x) {
+          callback(null, {
+            message: "Collaction deleted successfully",
+            code: 200,
+          });
+        } else {
+          callback(null, {
+            message: "Collaction deleted successfully",
+            code: 500,
+          });
+        }
+      }
+    },
   });
 }

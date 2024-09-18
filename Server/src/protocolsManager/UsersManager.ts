@@ -27,13 +27,13 @@ export default function Init(server: any) {
         const x = await UserMangments.adduser(username, password, isadmin);
         if (x) {
           callback(null, {
-            message: `user created successfully`,
+            message: `User created successfully`,
             code: 201,
           });
           return;
         } else {
           callback(null, {
-            message: `user exist`,
+            message: `User exist`,
             code: 400,
           });
         }
@@ -50,7 +50,7 @@ export default function Init(server: any) {
       if ((await TokenManager.isAdmin(token)) == true) {
         await UserMangments.deleteUser(username);
         callback(null, {
-          message: "user deleted successfully",
+          message: "User deleted successfully",
           code: 200,
         });
       } else {

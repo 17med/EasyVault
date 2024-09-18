@@ -40,10 +40,26 @@ export default function Init(server: any) {
         });
       }
     },
-    Deletedb:async ({request:{token,name}}:any,callback:any)=>{
+    Deletedb: async ({ request: { token, name } }: any, callback: any) => {
       if (await TokenManager.isAdmin(token)) {
-        
+        const x = await DataBaseMangments.DeleteDb(name);
+        if (x) {
+          callback(null, {
+            message: "DataBase deleted successfully",
+            code: 200,
+          });
+        } else {
+          callback(null, {
+            message: "ERROR",
+            code: 500,
+          });
+        }
+      } else {
+        callback(null, {
+          message: "unauthorized",
+          code: 401,
+        });
       }
-    }
+    },
   });
 }
