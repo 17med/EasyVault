@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import { BSON, EJSON, ObjectId } from "bson";
+import { RmDirOptions } from "fs";
 export default class DataBaseMangments {
   static async getDbs() {
     const isFile = async (fileName: string) => {
@@ -38,5 +39,14 @@ export default class DataBaseMangments {
     await fs.writeFile(`./src/DB/DataBases/${name}/Manfestdb.vault`, bytes);
     return true;
   }
+  static async DeleteDb(name: string) {
+    try {
+      const rmdir: RmDirOptions = { recursive: true };
+      await fs.rm(`./src/DB/DataBases/${name}`, rmdir);
+      return true;
+    } catch (e: any) {
+      return false;
+    }
+  }
 }
-DataBaseMangments.CreateDb("TEST");
+DataBaseMangments.DeleteDb("TEST");

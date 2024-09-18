@@ -40,5 +40,10 @@ export default function Init(server: any) {
         });
       }
     },
+    Deletedb:async ({request:{token,name}}:any,callback:any)=>{
+      if (await TokenManager.isAdmin(token)) {
+        
+      }
+    }
   });
 }
