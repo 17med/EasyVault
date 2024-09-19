@@ -7,9 +7,10 @@ COPY ./package*.json .
 
 RUN npm install
 
-COPY ./ .
+COPY . .
+
 
 RUN npm run build
 EXPOSE 51111
-
-CMD ["node", "dist/index.js"]
+RUN ls -la
+CMD ["npm", "start"]

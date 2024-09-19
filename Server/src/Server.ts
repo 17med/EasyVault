@@ -1,4 +1,4 @@
-import grpc from "@grpc/grpc-js";
+import * as grpc from "@grpc/grpc-js";
 import ConnectManger from "./protocolsManager/ConnectManager";
 import UserManager from "./protocolsManager/UsersManager";
 const server = new grpc.Server();
