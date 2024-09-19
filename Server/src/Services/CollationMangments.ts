@@ -3,6 +3,19 @@ import { BSON, EJSON, ObjectId } from "bson";
 import DataBaseMangments from "./DataBaseMangments";
 import { RmDirOptions } from "fs";
 export default class CollactionMangments {
+  static async verify(database: string, collaction: string) {
+    if ((await DataBaseMangments.getDbs()).indexOf(database) == -1) {
+      return false;
+    }
+    if (
+      (await CollactionMangments.getsCollactions(database)).indexOf(
+        collaction
+      ) == -1
+    ) {
+      return false;
+    }
+    return true;
+  }
   static async getsCollactions(database: string) {
     const isFile = async (fileName: string) => {
       if ((await fs.lstat(fileName)).isFile() == true) {
@@ -49,3 +62,4 @@ export default class CollactionMangments {
     }
   }
 }
+CollactionMangments.CreateCollaction("TEST", "TESTCOL");

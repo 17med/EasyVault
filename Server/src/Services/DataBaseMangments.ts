@@ -49,4 +49,4 @@ export default class DataBaseMangments {
     }
   }
 }
-DataBaseMangments.DeleteDb("TEST");
+DataBaseMangments.CreateDb("TEST");

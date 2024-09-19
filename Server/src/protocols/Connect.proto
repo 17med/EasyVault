@@ -10,6 +10,7 @@ service ConnectService {
     rpc connect(Connect) returns (ConnectResponse);
     rpc disconnect(Disconnect) returns (DisconnectResponse);
 }
+
 message ConnectResponse {
     string message = 1;
     int32 code = 2;
