@@ -59,7 +59,5 @@ Configuration options can be set using environment variables when running the Do
 
 ```bash
 docker run -d -p 51111:51111 \
-  -e DB_HOST=localhost \
-  -e DB_PORT=51111 \
   --name easyvaultdb 17med/easyvaultdb
 ```
