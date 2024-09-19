@@ -3,11 +3,11 @@ FROM node:slim
 
 WORKDIR /app
 
-COPY ./Server/package*.json .
+COPY ./package*.json .
 
 RUN npm install
 
-COPY ./Server .
+COPY . .
 
 RUN npm run build
 EXPOSE 51111
