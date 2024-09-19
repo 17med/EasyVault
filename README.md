@@ -19,6 +19,7 @@ EasyVault is a self-contained NoSQL database system that operates using Docker. 
 - **Schema-less**: Supports a flexible, schema-less data model.
 - **High Performance**: Designed for high-speed operations with efficient data handling.
 - **Ease of Use**: Minimal setup required, with Docker handling the environment.
+- **Granular User Permissions**: Allows you to set specific read and write permissions for users on individual databases.
 
 ## Installation
 
