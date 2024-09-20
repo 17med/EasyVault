@@ -1,0 +1,40 @@
+/* Main container */
+.home-container {
+  display: flex;
+  height: 100vh; /* Full height of the viewport */
+}
+
+/* Main Content Area */
+.content {
+  margin-left: 20vw; /* Space for the sidebar width */
+  flex-grow: 1; /* Fill remaining space */
+  padding: 20px; /* Padding for content area */
+  background-color: #ecf0f1; /* Light background */
+  overflow-y: auto; /* Enable scrolling for content */
+}
+
+/* Dashboard Sections */
+.dashboard {
+  display: flex;
+  flex-direction: column; /* Stack sections vertically */
+  gap: 20px; /* Space between sections */
+}
+
+/* Card Styles */
+.card {
+  background-color: #fff; /* Card background */
+  padding: 15px; /* Padding inside cards */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Title Styles */
+.card h2 {
+  margin: 0; /* Remove default margin */
+  color: #333; /* Dark text color */
+}
+
+/* Content Text */
+.card p {
+  color: #666; /* Lighter text color */
+}

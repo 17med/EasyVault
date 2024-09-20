@@ -1,47 +1,19 @@
-import { useState } from 'react'
-function App() {
-  const ipcHandle = () => window.electron.ipcRenderer.send('ping')
-  const [username, setusername] = useState('')
-  const [password, setpassword] = useState('')
-  const [url, seturl] = useState('')
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Login from './Pages/login'
+import useStore from './Services/storage'
+import { useEffect, useState } from 'react'
+import Home from './Pages/home/Home'
+export default function App() {
+  const [islogin, setlogin] = useState('')
 
-  const connectToDB = async () => {
-    try {
-      if (!window.DB) {
-        throw new Error('window.DB is not defined')
-      }
-      const response = await window.DB.Connect({ username, password, url })
-      console.log(response) // Output from Electron's function
-    } catch (error) {
-      console.error('Error calling Electron function:', error)
-    }
-  }
   return (
-    <>
-      <input
-        placeholder={'name'}
-        onChange={(event) => {
-          setpassword(event.target.value)
-        }}
-      />{' '}
-      <br />
-      <input
-        placeholder={'password'}
-        onChange={(event) => {
-          setpassword(event.target.value)
-        }}
-      />{' '}
-      <br />
-      <input
-        placeholder={'url'}
-        onChange={(event) => {
-          seturl(event.target.value)
-        }}
-      />{' '}
-      <br />
-      <button onClick={connectToDB}>test</button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={islogin ? <Navigate to="/home" /> : <Navigate to="/login" />} />
+        <Route path="/login" element={<Login setlogin={setlogin} />} />
+        <Route path="/home/*" element={<Home setlogin={setlogin} />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App

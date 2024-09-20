@@ -2,22 +2,23 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import ax from '../DRIVERDB/client'
+import DB from '../DRIVERDB/DB'
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1600,
+    height: 800,
     show: false,
+    resizable: false,
     contextIsolation: false,
-    autoHideMenuBar: true,
+
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
   })
-
+  mainWindow.setMenu(null)
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -26,7 +27,7 @@ function createWindow() {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
-
+  mainWindow.webContents.openDevTools()
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -35,15 +36,25 @@ function createWindow() {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
-ipcMain.handle('db', async (event, args) => {
+ipcMain.handle('dbconnect', async (event, args) => {
   console.log('Function called from React with args:', args)
-  await ax('127.0.0.1:51111', 'admin', 'admin')
-  // Perform your database operation or any other task here
-  return 'Function executed successfully!' // Return a result to the renderer
+
+  if (args.username == '' || args.password == '' || args.url == '') {
+    return 400
+  }
+  const db = new DB()
+  //'127.0.0.1:51111'
+  return await db.Connect(args.username, args.password, args.url)
 })
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+
+ipcMain.handle('dbdisconnect', async (event, args) => {
+  console.log('Function called from React with args:')
+
+  const db = new DB()
+  //'127.0.0.1:51111'
+  return await db.Disconnect()
+})
+
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
@@ -70,10 +81,13 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+  try {
+    await db.Disconnect()
+  } catch (e) {}
 })
 
 // In this file you can include the rest of your app"s specific main process

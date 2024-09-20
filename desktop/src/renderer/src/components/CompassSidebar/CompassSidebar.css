@@ -1,0 +1,12 @@
+/* Container styling */
+.compass-sidebar {
+  width: 20vw; /* Set the width of the sidebar to 20% of the viewport width */
+  height: 100vh; /* Full height of the viewport */
+  /* Dark background similar to MongoDB Compass */
+  color: #cfd8dc; /* Text color */
+  position: fixed; /* Fix position to the left */
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15); /* Shadow for separation */
+  overflow-y: auto; /* Scroll if content overflows */
+}

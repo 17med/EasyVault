@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { disconnect } from 'process'
 
 const api = {}
 
@@ -15,5 +16,6 @@ if (process.contextIsolated) {
   window.api = api
 }
 contextBridge.exposeInMainWorld('DB', {
-  Connect: (args) => ipcRenderer.invoke('db', args) // Sends a message to the 'db' channel
+  Connect: (args) => ipcRenderer.invoke('dbconnect', args),
+  disconnect: (args) => ipcRenderer.invoke('dbdisconnect', args)
 })
