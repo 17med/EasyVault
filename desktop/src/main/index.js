@@ -37,7 +37,7 @@ function createWindow() {
 }
 ipcMain.handle('db', async (event, args) => {
   console.log('Function called from React with args:', args)
-  await ax('127.0.0.1:50051', 'admin', 'admin')
+  await ax('127.0.0.1:51111', 'admin', 'admin')
   // Perform your database operation or any other task here
   return 'Function executed successfully!' // Return a result to the renderer
 })

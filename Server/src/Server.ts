@@ -8,7 +8,7 @@ export default function startserver() {
   ConnectManger(server);
 
   server.bindAsync(
-    "127.0.0.1:51111",
+    "0.0.0.0:51111",
     grpc.ServerCredentials.createInsecure(),
     (error, port) => {
       if (error) {
