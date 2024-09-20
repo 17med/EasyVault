@@ -1,0 +1,23 @@
+syntax = "proto3";
+message Connect {
+    string username = 1;
+    string password = 2;
+}
+message Disconnect{
+    string token = 1;
+}
+service ConnectService {
+    rpc connect(Connect) returns (ConnectResponse);
+    rpc disconnect(Disconnect) returns (DisconnectResponse);
+}
+
+message ConnectResponse {
+    string message = 1;
+    int32 code = 2;
+    string token = 3;
+}
+message DisconnectResponse {
+    
+    int32 code = 1;
+    
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+message Createuser {
+
+    string token=1;
+    string username=2;
+    string password=3;
+    bool isadmin=4;
+    
+}
+message Deleteuser{
+    string token=1;
+    string username=2;
+}
+service UserService{
+    rpc CreateUser(Createuser) returns (CreateuserResponse);
+    rpc DeleteUser(Deleteuser) returns (DeleteuserResponse);
+ 
+}
+
+message CreateuserResponse{
+    int32 code=1;
+    string message=2;
+    
+}
+message DeleteuserResponse{
+    int32 code=1;
+    string message=2;
+}

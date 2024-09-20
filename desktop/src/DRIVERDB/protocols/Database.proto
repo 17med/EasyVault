@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message Dbname{
+    string name=1;
+    string token=2;
+}
+message ChangeDbname{
+    string oldname=1;
+    string newname=2;
+}
+
+service DbService{
+    rpc Createdb(Dbname) returns(result);
+    rpc Deletedb(Dbname) returns(result);
+}
+
+message result{
+    string message=1;
+    int32 code=2;
+}

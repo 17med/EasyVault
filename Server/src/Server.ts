@@ -8,7 +8,7 @@ export default function startserver() {
   ConnectManger(server);
 
   server.bindAsync(
-    "127.0.0.1:50051",
+    "127.0.0.1:51111",
     grpc.ServerCredentials.createInsecure(),
     (error, port) => {
       if (error) {
@@ -34,7 +34,7 @@ export default function startserver() {
         "                |___/                                      "
       );
 
-      console.log(`\nServer running at http://127.0.0.1:51111`);
+      console.log(`\nServer running at 127.0.0.1:51111`);
     }
   );
 }

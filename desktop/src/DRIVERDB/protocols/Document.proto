@@ -1,0 +1,44 @@
+syntax = "proto3";
+message InsertDocument{
+    json document=1;
+    string token=2;
+    string database=3;
+    string collection=4;
+}
+message GetDocuments{
+    string token=1;
+    string database=2;
+    string collection=3;
+    json fitlter=4;
+}
+message DeleteDocuments{
+    string token=1;
+    string database=2;
+    string collection=3;
+    json fitlter=4;
+}
+message UpdateDocuments{
+    string token=1;
+    string database=2;
+    string collection=3;
+    json fitlter=4;
+    json update=5;
+}
+
+service DocumentsService{
+    rpc Insertdocument(InsertDocument) returns(result);
+    rpc Getdocuments(GetDocuments) returns(reslutsofselect);
+    rpc Updatedocuments(UpdateDocuments) returns(result);
+    
+}
+
+message result{
+    string message=1;
+    int32 code=2;
+}
+
+message reslutsofselect{
+    repeated json documents=1;
+    int code=2;
+    string message=3;
+}
