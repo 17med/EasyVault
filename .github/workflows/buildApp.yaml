@@ -1,0 +1,51 @@
+name: Build Electron App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.16.0"
+
+      - name: Change to Desktop Directory
+        run: cd desktop
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: desktop
+
+      - name: Build App
+        run: npm run build
+        working-directory: desktop
+
+      - name: Package App
+        run: |
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            npm run dist:linux
+          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+            npm run dist:win
+          fi
+        working-directory: desktop
+
+      - name: Save Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: electron-app-${{ matrix.os }}
+          path: desktop/dist/*
