@@ -1,13 +1,12 @@
-name: Build Electron App
+name: build EasyVaultdb App
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: ["main"]
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -16,25 +15,44 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
+      # Check out the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.16.0"
 
-      - name: Change to Desktop Directory
-        run: cd desktop
+      # Clean Electron Builder Cache (Linux Only)
+      - name: Clean Electron Builder Cache
+        if: runner.os == 'Linux'
+        run: |
+          rm -rf ~/.cache/electron-builder
 
+      # Install dependencies on Ubuntu
+      - name: Install Ubuntu Dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang libdbus-1-dev libgtk-3-dev \
+              libnotify-dev libasound2-dev libcap-dev \
+              libcups2-dev libxtst-dev libxss1 libnss3-dev \
+              gcc-multilib g++-multilib curl gperf bison \
+              python3-dbusmock openjdk-8-jre
+
+      # Install npm dependencies
       - name: Install Dependencies
         run: npm install
         working-directory: desktop
 
+      # Build the Electron app
       - name: Build App
         run: npm run build
         working-directory: desktop
 
+      # Package the Electron app for the specific OS
       - name: Package App
         run: |
           if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
@@ -44,6 +62,7 @@ jobs:
           fi
         working-directory: desktop
 
+      # Save the built artifacts
       - name: Save Artifacts
         uses: actions/upload-artifact@v3
         with:
