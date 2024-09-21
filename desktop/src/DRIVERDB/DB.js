@@ -1,4 +1,5 @@
 import { connectToService, DisconnectService } from './client'
+import { getDatabases } from './Database'
 export default class DB {
   static Token = null
   static url = null
@@ -11,7 +12,7 @@ export default class DB {
       if (x.code == 401) {
         return 401
       } else {
-        console.log(x)
+        console.log('x :', x)
         DB.Token = x.token
         DB.url = url
         DB.username = username
@@ -40,6 +41,16 @@ export default class DB {
       }
     } catch (e) {
       return 401
+    }
+  }
+  async getDatabases() {
+    try {
+      const x = await getDatabases(DB.url, DB.Token)
+      console.log('x', x)
+      return x.dblist
+    } catch (e) {
+      console.log('error', e)
+      return []
     }
   }
 }

@@ -3,7 +3,7 @@ import * as protoLoader from "@grpc/proto-loader";
 import TokenManager from "../Services/TokenManagments";
 import UserMangments from "../Services/UserManagments";
 import DataBaseMangments from "../Services/DataBaseMangments";
-const PROTO_PATH = "./src/protocols/DbService.proto";
+const PROTO_PATH = "./src/protocols/Database.proto";
 const options = {
   keepCase: true,
   longs: String,
@@ -59,6 +59,16 @@ export default function Init(server: any) {
           message: "unauthorized",
           code: 401,
         });
+      }
+    },
+    Getdb: async ({ request: { token } }: any, callback: any) => {
+      console.log(token);
+      if (await TokenManager.verify(token)) {
+        const x = await DataBaseMangments.getDbs();
+        console.log(x);
+        callback(null, { dblist: x, code: 200 });
+      } else {
+        callback(null, { dblist: [], code: 401 });
       }
     },
   });

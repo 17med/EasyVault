@@ -4,7 +4,6 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import DB from '../DRIVERDB/DB'
 function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1600,
     height: 800,
@@ -54,7 +53,13 @@ ipcMain.handle('dbdisconnect', async (event, args) => {
   //'127.0.0.1:51111'
   return await db.Disconnect()
 })
+ipcMain.handle('getDatabases', async (event, args) => {
+  console.log('Function called from React with args:')
 
+  const db = new DB()
+  //'127.0.0.1:51111'
+  return await db.getDatabases()
+})
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')

@@ -24,7 +24,9 @@ export default class DataBaseMangments {
             s.push(x[i]);
           }
         }
-      } catch (e: any) {}
+      } catch (e: any) {
+        console.log(e);
+      }
     }
     //console.log(s);
     return s;
@@ -49,4 +51,3 @@ export default class DataBaseMangments {
     }
   }
 }
-DataBaseMangments.CreateDb("TEST");

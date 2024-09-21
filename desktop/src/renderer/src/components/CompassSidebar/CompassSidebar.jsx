@@ -5,8 +5,12 @@ import 'primereact/resources/primereact.min.css' // PrimeReact CSS
 import 'primeicons/primeicons.css' // PrimeIcons CSS
 import './CompassSidebar.css' // Custom CSS
 import { useNavigate } from 'react-router-dom'
-const CompassSidebar = ({ setlogin }) => {
+const CompassSidebar = ({ setlogin, db }) => {
   const navigate = useNavigate()
+  const l = []
+  db.forEach((element) => {
+    l.push({ label: element, icon: 'pi pi-fw pi-database' })
+  })
   const logout = async () => {
     try {
       const response = await window.DB.disconnect()
@@ -45,7 +49,8 @@ const CompassSidebar = ({ setlogin }) => {
     {
       label: 'DataBases',
       icon: 'pi pi-fw pi-database',
-      items: [{ label: 'Overview', icon: 'pi pi-fw pi-database' }]
+
+      items: [{ label: 'Add', icon: 'pi pi-fw pi-plus' }, ...l]
     },
     {
       label: 'Management',

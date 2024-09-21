@@ -4,6 +4,9 @@ message Dbname{
     string name=1;
     string token=2;
 }
+message DBselect{
+    string token=1;
+}
 message ChangeDbname{
     string oldname=1;
     string newname=2;
@@ -11,9 +14,14 @@ message ChangeDbname{
 
 service DbService{
     rpc Createdb(Dbname) returns(result);
+    rpc Getdb(DBselect) returns(Getdbresult);
     rpc Deletedb(Dbname) returns(result);
 }
 
+message Getdbresult{
+    repeated string dblist=1;
+    int32 code=2;
+}
 message result{
     string message=1;
     int32 code=2;

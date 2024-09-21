@@ -11,7 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={islogin ? <Navigate to="/home" /> : <Navigate to="/login" />} />
         <Route path="/login" element={<Login setlogin={setlogin} />} />
-        <Route path="/home/*" element={<Home setlogin={setlogin} />} />
+        <Route path="/home/*" element={<Home setlogin={setlogin} islogin={islogin} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

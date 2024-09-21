@@ -9,8 +9,8 @@ import useStore from '../Services/storage'
 import './home.css' // Create this file for custom styling
 import { toast } from 'react-toastify'
 function App({ setlogin }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('admin')
+  const [password, setPassword] = useState('admin')
   const [url, setUrl] = useState('127.0.0.1:51111')
   const navigate = useNavigate()
   const connectToDB = async () => {
@@ -40,6 +40,7 @@ function App({ setlogin }) {
         <InputText
           placeholder="Name"
           value={username}
+          defaultValue={'admin'}
           onChange={(event) => setUsername(event.target.value)}
           className="input-field"
         />
@@ -48,6 +49,7 @@ function App({ setlogin }) {
           placeholder="Password"
           type="password"
           value={password}
+          defaultValue={'admin'}
           onChange={(event) => setPassword(event.target.value)}
           className="input-field"
         />
