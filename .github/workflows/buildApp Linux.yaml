@@ -71,7 +71,7 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       # Upload release assets
       - name: Upload Release Assets
@@ -80,4 +80,4 @@ jobs:
           tag_name: v1.0.0 # Match with the release created
           files: desktop/dist/* # Adjust the path to your artifacts
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
