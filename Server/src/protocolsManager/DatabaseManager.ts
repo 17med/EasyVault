@@ -20,6 +20,7 @@ const DbServ = grpc.loadPackageDefinition(packageDefinition) as unknown as {
 export default function Init(server: any) {
   server.addService(DbServ.DbService.service, {
     Createdb: async ({ request: { token, name } }: any, callback: any) => {
+      console.log("sssx", token, name);
       if (await TokenManager.isAdmin(token)) {
         const x = await DataBaseMangments.CreateDb(name);
         if (x) {

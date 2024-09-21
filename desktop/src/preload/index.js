@@ -18,5 +18,9 @@ if (process.contextIsolated) {
 contextBridge.exposeInMainWorld('DB', {
   Connect: (args) => ipcRenderer.invoke('dbconnect', args),
   disconnect: (args) => ipcRenderer.invoke('dbdisconnect', args),
-  getDatabases: (args) => ipcRenderer.invoke('getDatabases', args)
+  getDatabases: (args) => ipcRenderer.invoke('getDatabases', args),
+  createdb: (args) => ipcRenderer.invoke('createdb', args),
+  deletedb: (args) => ipcRenderer.invoke('deletedb', args),
+  getcollaction: (args) => ipcRenderer.invoke('getcollaction', args),
+  createcollaction: (args) => ipcRenderer.invoke('createcollaction', args)
 })

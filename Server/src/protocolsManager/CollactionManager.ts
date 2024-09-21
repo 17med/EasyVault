@@ -3,7 +3,7 @@ import * as protoLoader from "@grpc/proto-loader";
 import TokenManager from "../Services/TokenManagments";
 import CollactionMangments from "../Services/CollationMangments";
 import path from "path";
-const PROTO_PATH = "./src/protocols/CollactionService.proto";
+const PROTO_PATH = "./src/protocols/Collaction.proto";
 const options = {
   keepCase: true,
   longs: String,
@@ -22,11 +22,11 @@ const CollactionServ = grpc.loadPackageDefinition(
 export default function Init(server: any) {
   server.addService(CollactionServ.CollactionService.service, {
     Createcollaction: async (
-      { request: { database, token, name } }: any,
+      { request: { db, token, name } }: any,
       callback: any
     ) => {
       if (await TokenManager.verify(token)) {
-        const x = await CollactionMangments.CreateCollaction(database, name);
+        const x = await CollactionMangments.CreateCollaction(db, name);
         if (x) {
           callback(null, {
             message: "collaction created succ",
@@ -42,6 +42,22 @@ export default function Init(server: any) {
         callback(null, {
           message: `unauthorized`,
           code: 401,
+        });
+      }
+    },
+    Getcollaction: async ({ request: { db, token } }: any, callback: any) => {
+      if (!(await TokenManager.verify(token))) {
+        callback(null, {
+          message: "unauthorized",
+          code: 401,
+        });
+      } else {
+        const x = await CollactionMangments.getsCollactions(db);
+        console.log(x);
+        callback(null, {
+          collectionlist: x,
+          message: "",
+          code: 200,
         });
       }
     },

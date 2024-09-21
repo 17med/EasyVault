@@ -110,8 +110,3 @@ export default class DocumentMangments {
     return nb != 0;
   }
 }
-DocumentMangments.insertDocument("TEST", "TESTCOL", {
-  name: "test",
-  password: "test",
-});
-DocumentMangments.getDocument("TEST", "TESTCOL", {});

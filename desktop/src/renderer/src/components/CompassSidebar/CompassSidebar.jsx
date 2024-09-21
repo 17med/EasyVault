@@ -5,11 +5,74 @@ import 'primereact/resources/primereact.min.css' // PrimeReact CSS
 import 'primeicons/primeicons.css' // PrimeIcons CSS
 import './CompassSidebar.css' // Custom CSS
 import { useNavigate } from 'react-router-dom'
-const CompassSidebar = ({ setlogin, db }) => {
+import { toast } from 'react-toastify'
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup'
+const CompassSidebar = ({ setlogin, db, adddb, refrech, addcollaction }) => {
+  const deletedb = async (name) => {
+    try {
+      const response = await window.DB.deletedb({ name: name })
+      if (response == 200) {
+        toast.success('database deleted successfully')
+        refrech()
+      }
+    } catch (e) {
+      toast.error('error ')
+    }
+  }
   const navigate = useNavigate()
   const l = []
   db.forEach((element) => {
-    l.push({ label: element, icon: 'pi pi-fw pi-database' })
+    const x = []
+    element.elements.forEach((EX) => {
+      x.push({
+        label: EX,
+        icon: 'pi pi-fw pi-book'
+      })
+    })
+    l.push({
+      label: element.main,
+      icon: 'pi pi-fw pi-database',
+      items: [
+        {
+          label: 'Collections',
+          icon: 'pi pi-fw pi-folder',
+          items: [
+            {
+              label: 'Add',
+              icon: 'pi pi-fw pi-plus',
+              command: () => {
+                addcollaction(element.main)
+              }
+            },
+            ...x
+          ]
+        },
+        {
+          label: 'Settings',
+          icon: 'pi pi-fw pi-cog',
+          command: () => {
+            console.log(element)
+          },
+
+          items: [
+            {
+              label: 'Permisions',
+              icon: 'pi pi-fw pi-user-edit',
+              command: () => {
+                toast.info('coming soon')
+              }
+            },
+            {
+              label: 'Delete',
+              icon: 'pi pi-fw pi-times',
+              command: () => {
+                deletedb(element.main)
+              }
+            }
+          ]
+        }
+      ]
+    })
   })
   const logout = async () => {
     try {
@@ -50,7 +113,23 @@ const CompassSidebar = ({ setlogin, db }) => {
       label: 'DataBases',
       icon: 'pi pi-fw pi-database',
 
-      items: [{ label: 'Add', icon: 'pi pi-fw pi-plus' }, ...l]
+      items: [
+        {
+          label: 'refrech',
+          icon: 'pi pi-fw pi-refresh',
+          command: () => {
+            refrech()
+          }
+        },
+        {
+          label: 'Add',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            adddb(true)
+          }
+        },
+        ...l
+      ]
     },
     {
       label: 'Management',

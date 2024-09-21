@@ -36,6 +36,7 @@ export default class DataBaseMangments {
     if ((await DataBaseMangments.getDbs()).indexOf(name) != -1) {
       return false;
     }
+    console.log("sssx", name);
     await fs.mkdir(`./src/DB/DataBases/${name}`);
     const bytes = BSON.serialize({ _id: new ObjectId() });
     await fs.writeFile(`./src/DB/DataBases/${name}/Manfestdb.vault`, bytes);

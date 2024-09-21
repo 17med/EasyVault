@@ -2,13 +2,15 @@ import * as grpc from "@grpc/grpc-js";
 import ConnectManger from "./protocolsManager/ConnectManager";
 import UserManager from "./protocolsManager/UsersManager";
 import DatabaseManager from "./protocolsManager/DatabaseManager";
+import CollactionManager from "./protocolsManager/CollactionManager";
 const server = new grpc.Server();
 
 export default function startserver() {
   UserManager(server);
   ConnectManger(server);
   DatabaseManager(server);
-  
+  CollactionManager(server);
+
   server.bindAsync(
     "0.0.0.0:51111",
     grpc.ServerCredentials.createInsecure(),

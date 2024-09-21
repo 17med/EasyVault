@@ -45,6 +45,17 @@ ipcMain.handle('dbconnect', async (event, args) => {
   //'127.0.0.1:51111'
   return await db.Connect(args.username, args.password, args.url)
 })
+ipcMain.handle('createdb', async (event, args) => {
+  console.log('Function called from React with args:')
+  if (args.name == '') {
+    return 400
+  }
+  const db = new DB()
+  const l = await db.createDatabase(args.name)
+
+  //'127.0.0.1:51111'
+  return l
+})
 
 ipcMain.handle('dbdisconnect', async (event, args) => {
   console.log('Function called from React with args:')
@@ -59,6 +70,34 @@ ipcMain.handle('getDatabases', async (event, args) => {
   const db = new DB()
   //'127.0.0.1:51111'
   return await db.getDatabases()
+})
+
+ipcMain.handle('deletedb', async (event, args) => {
+  console.log('Function called from React with args:')
+  if (args.name == '') {
+    return 400
+  }
+  const db = new DB()
+  //'127.0.0.1:51111'
+  return await db.deleteDatabase(args.name)
+})
+ipcMain.handle('getcollaction', async (event, args) => {
+  console.log('Function called from React with args:')
+  if (args.dbname == '') {
+    return 400
+  }
+  const db = new DB()
+  //'127.0.0.1:51111'
+  return await db.getcollaction(args.dbname)
+})
+ipcMain.handle('createcollaction', async (event, args) => {
+  console.log('Function called from React with args:', args)
+  if (args.dbname == '' || args.collection == '') {
+    return 400
+  }
+  const db = new DB()
+  //'127.0.0.1:51111'
+  return await db.createCOllaction(args.dbname, args.collection)
 })
 app.whenReady().then(() => {
   // Set app user model id for windows

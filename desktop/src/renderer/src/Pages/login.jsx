@@ -24,6 +24,10 @@ function App({ setlogin }) {
         toast.error('Please enter valid credentials')
         return
       }
+      if (response == 500) {
+        toast.error('Error connecting to the database')
+        return
+      }
       setlogin(true)
       navigate('/home')
       toast.success('Connected to the database')

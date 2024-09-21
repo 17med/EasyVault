@@ -3,6 +3,10 @@ syntax = "proto3";
 message Collactionname{
     string name=1;
     string db=2;
+    string token=3;
+}
+message GetCollaction{
+    string db=1;
     string token=2;
 }
 message ChangeCollactionname{
@@ -12,9 +16,15 @@ message ChangeCollactionname{
 
 service CollactionService{
     rpc Createcollaction(Collactionname) returns(result);
+    rpc Getcollaction(GetCollaction) returns(resultcollaction);
     rpc Deletecollaction(Collactionname) returns(result);
 }
+message resultcollaction{
+    repeated string collectionlist=1;
+    string message=2;
+    int32 code=3;
 
+}
 message result{
     string message=1;
     int32 code=2;

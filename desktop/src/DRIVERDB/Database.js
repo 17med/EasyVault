@@ -44,3 +44,53 @@ export async function getDatabases(url, token) {
     return []
   }
 }
+export async function Createdb(name, token, url) {
+  try {
+    console.log('url', url, token, name)
+    if (!clientInstance) {
+      clientInstance = new DbService(url, grpc.credentials.createInsecure())
+    }
+
+    // Call Getdb method on client instance
+    const result = await new Promise((resolve, reject) => {
+      clientInstance.Createdb({ token, name }, (error, response) => {
+        if (error) {
+          return reject(500)
+        }
+        console.log('resss', response)
+        resolve(response.code)
+      })
+    })
+
+    return result
+  } catch (error) {
+    console.error('Error:', error)
+    return 500
+  }
+}
+export async function Deletedb(name, token, url) {
+  try {
+    console.log('url', url, token, name)
+    if (!clientInstance) {
+      clientInstance = new DbService(url, grpc.credentials.createInsecure())
+    }
+
+    // Call Getdb method on client instance
+    const result = await new Promise((resolve, reject) => {
+      clientInstance.Deletedb({ token, name }, (error, response) => {
+        if (error) {
+          return reject(500)
+        }
+        console.log('resss', response)
+        resolve(response.code)
+      })
+    })
+
+    return result
+  } catch (error) {
+    console.error('Error:', error)
+    return 500
+  }
+}
+
+
