@@ -1,4 +1,4 @@
-name: Build EasyVaultdb App (Linux)
+name: Build EasyVaultdb App (Ubuntu)
 
 on:
   push:
@@ -60,3 +60,24 @@ jobs:
         with:
           name: electron-app-ubuntu
           path: desktop/dist/*
+
+      # Create GitHub Release
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.0 # Change this to your desired versioning
+          release_name: "Release v1.0.0" # Change this as needed
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Upload release assets
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.0 # Match with the release created
+          files: desktop/dist/* # Adjust the path to your artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
