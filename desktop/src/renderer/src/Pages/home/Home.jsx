@@ -3,6 +3,7 @@ import CompassSidebar from '../../components/CompassSidebar/CompassSidebar'
 import './Home.css'
 import Adddb from '../../components/Add DB/AddDB'
 import AddCollaction from '../../components/Add Collaction/AddCollaction'
+import Sidebar from '../../components/Sidebar/Sidebar'
 const Home = ({ setlogin, islogin }) => {
   const [db, setdb] = useState([])
   const [adddb, setadddb] = useState(false)
@@ -16,9 +17,7 @@ const Home = ({ setlogin, islogin }) => {
         l.push({ main: x[i], elements: await window.DB.getcollaction({ dbname: x[i] }) })
       }
       setdb(l)
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   }
   useEffect(() => {
     if (islogin) {
@@ -28,6 +27,22 @@ const Home = ({ setlogin, islogin }) => {
   }, [islogin, refrech])
   return (
     <div className="home-container">
+      <Sidebar
+        setlogin={setlogin}
+        db={db}
+        adddb={setadddb}
+        addcollaction={(db) => {
+          setaddcollaction({ state: true, db: db })
+        }}
+        refrech={() => {
+          setrefrech(!refrech)
+        }}
+      />
+
+      <div className="content">
+        <h1>Main Content</h1>
+        <p>Welcome to the dashboard. This is the main content area.</p>
+      </div>
       <Adddb
         visiable={adddb}
         setVisible={setadddb}
@@ -45,25 +60,6 @@ const Home = ({ setlogin, islogin }) => {
           setrefrech(!refrech)
         }}
       />
-      {/* Sidebar */}
-      <CompassSidebar
-        setlogin={setlogin}
-        db={db}
-        adddb={setadddb}
-        addcollaction={(db) => {
-          console.log('dbbbbbbbbbb', db)
-          setaddcollaction({ state: true, db: db })
-        }}
-        refrech={() => {
-          setrefrech(!refrech)
-        }}
-      />
-
-      {/* Main Content Area */}
-      <div className="content">
-        <h1>Main Content</h1>
-        <p>Welcome to the dashboard. This is the main content area.</p>
-      </div>
     </div>
   )
 }

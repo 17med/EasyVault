@@ -14,32 +14,26 @@ jobs:
     timeout-minutes: 60000
 
     steps:
-      # Check out the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.16.0"
 
-      # Install npm dependencies
       - name: Install Dependencies
         run: npm install
         working-directory: desktop
 
-      # Build the Electron app
       - name: Build App
         run: npm run build
         working-directory: desktop
 
-      # Package the Electron app for Windows
       - name: Package App
         run: npm run dist:win
         working-directory: desktop
 
-      # Save the built artifacts
       - name: Save Artifacts
         uses: actions/upload-artifact@v3
         with:

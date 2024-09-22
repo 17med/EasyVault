@@ -6,7 +6,7 @@
 
 /* Main Content Area */
 .content {
-  margin-left: 20vw; /* Space for the sidebar width */
+  margin-left: 0vw; /* Space for the sidebar width */
   flex-grow: 1; /* Fill remaining space */
   padding: 20px; /* Padding for content area */
   background-color: #ecf0f1; /* Light background */

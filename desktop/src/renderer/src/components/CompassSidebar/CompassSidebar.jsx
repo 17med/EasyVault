@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PanelMenu } from 'primereact/panelmenu'
 import 'primereact/resources/themes/lara-light-indigo/theme.css' // Theme CSS
 import 'primereact/resources/primereact.min.css' // PrimeReact CSS
@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup'
 const CompassSidebar = ({ setlogin, db, adddb, refrech, addcollaction }) => {
+  const [expandedKeys, setExpandedKeys] = useState({})
+
+  const [l, setl] = useState([])
   const deletedb = async (name) => {
     try {
       const response = await window.DB.deletedb({ name: name })
@@ -20,60 +23,69 @@ const CompassSidebar = ({ setlogin, db, adddb, refrech, addcollaction }) => {
     }
   }
   const navigate = useNavigate()
-  const l = []
-  db.forEach((element) => {
-    const x = []
-    element.elements.forEach((EX) => {
-      x.push({
-        label: EX,
-        icon: 'pi pi-fw pi-book'
+
+  useEffect(() => {
+    const l = []
+    db.forEach((element) => {
+      const x = []
+      element.elements.forEach((EX) => {
+        x.push({
+          label: EX,
+          icon: 'pi pi-fw pi-book'
+        })
+      })
+      l.push({
+        label: element.main,
+        icon: 'pi pi-fw pi-database',
+        items: [
+          {
+            label: 'Collections',
+            icon: 'pi pi-fw pi-folder',
+            items: [
+              {
+                label: 'Add',
+                icon: 'pi pi-fw pi-plus',
+                command: () => {
+                  addcollaction(element.main)
+                }
+              },
+              ...element.elements.map((EX) => ({
+                label: EX,
+                icon: 'pi pi-fw pi-book'
+              }))
+            ]
+          },
+          {
+            label: 'Settings',
+            icon: 'pi pi-fw pi-cog',
+            command: () => {
+              console.log(element)
+            },
+
+            items: [
+              {
+                label: 'Permisions',
+                icon: 'pi pi-fw pi-user-edit',
+                command: () => {
+                  toast.info('coming soon')
+                }
+              },
+              {
+                label: 'Delete',
+                icon: 'pi pi-fw pi-times',
+                command: () => {
+                  deletedb(element.main)
+                }
+              }
+            ]
+          }
+        ]
       })
     })
-    l.push({
-      label: element.main,
-      icon: 'pi pi-fw pi-database',
-      items: [
-        {
-          label: 'Collections',
-          icon: 'pi pi-fw pi-folder',
-          items: [
-            {
-              label: 'Add',
-              icon: 'pi pi-fw pi-plus',
-              command: () => {
-                addcollaction(element.main)
-              }
-            },
-            ...x
-          ]
-        },
-        {
-          label: 'Settings',
-          icon: 'pi pi-fw pi-cog',
-          command: () => {
-            console.log(element)
-          },
+    setl(l)
+    console.log('lrp')
+  }, [db])
 
-          items: [
-            {
-              label: 'Permisions',
-              icon: 'pi pi-fw pi-user-edit',
-              command: () => {
-                toast.info('coming soon')
-              }
-            },
-            {
-              label: 'Delete',
-              icon: 'pi pi-fw pi-times',
-              command: () => {
-                deletedb(element.main)
-              }
-            }
-          ]
-        }
-      ]
-    })
-  })
   const logout = async () => {
     try {
       const response = await window.DB.disconnect()

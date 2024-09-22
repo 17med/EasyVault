@@ -3,7 +3,7 @@ import protoLoader from '@grpc/proto-loader'
 import { join } from 'path'
 
 const PROTO_PATH = join(__dirname, '../../src/DRIVERDB/protocols/Connect.proto')
-console.log(join(__dirname, '../../src/DRIVERDB/protocols/Connect.proto'))
+console.log(join(__dirname, '../protocols/Connect.proto'))
 const options = {
   keepCase: true,
   longs: String,

@@ -14,22 +14,18 @@ jobs:
     timeout-minutes: 60000
 
     steps:
-      # Check out the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.16.0"
 
-      # Clean Electron Builder Cache
       - name: Clean Electron Builder Cache
         run: |
           rm -rf ~/.cache/electron-builder
 
-      # Install Ubuntu dependencies
       - name: Install Ubuntu Dependencies
         run: |
           sudo apt-get update
@@ -39,45 +35,39 @@ jobs:
               gcc-multilib g++-multilib curl gperf bison \
               python3-dbusmock openjdk-8-jre
 
-      # Install npm dependencies
       - name: Install Dependencies
         run: npm install
         working-directory: desktop
 
-      # Build the Electron app
       - name: Build App
         run: npm run build
         working-directory: desktop
 
-      # Package the Electron app for Linux
       - name: Package App
         run: npm run dist:linux
         working-directory: desktop
 
-      # Save the built artifacts
       - name: Save Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: electron-app-ubuntu
           path: desktop/dist/*
 
-      # Create GitHub Release
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0 # Change this to your desired versioning
-          release_name: "Release v1.0.0" # Change this as needed
+          tag_name: v1.0.0
+          release_name: "Release v1.0.0"
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
-      # Upload release assets
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0 # Match with the release created
-          files: desktop/dist/* # Adjust the path to your artifacts
+          tag_name: v1.0.0
+          files: desktop/dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}

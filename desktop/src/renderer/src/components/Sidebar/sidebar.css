@@ -1,0 +1,16 @@
+.sidebar-container {
+  width: 20vw;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent the container itself from scrolling */
+}
+
+/* Sidebar content */
+.sidebar-content {
+  overflow-y: auto; /* Enable vertical scrolling for sidebar content */
+  height: calc(100vh - 56px); /* Calculate height excluding the Navbar.Brand height */
+}
+
+/* Adjust Navbar.Brand height */
+.sidebar-container .navbar-brand {
+  height: 56px; /* Set height to match the height excluded in .sidebar-content */
+}
